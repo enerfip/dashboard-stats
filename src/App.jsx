@@ -8,6 +8,7 @@ function App() {
 
   return (
     <>
+    bob
       <Routes>
         <Route path='/' element={<AmountsCollected />} />
         <Route path='/chartRepresentation' element={<ChartRepresentation />} />

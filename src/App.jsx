@@ -10,7 +10,7 @@ function App() {
     <>
     bob
       <Routes>
-        <Route path='/' element={<AmountsCollected />} />
+        <Route path='/dashboard-stats' element={<AmountsCollected />} />
         <Route path='/chartRepresentation' element={<ChartRepresentation />} />
       </Routes>
     </>

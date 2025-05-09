@@ -4,7 +4,7 @@ function AmountsCollected() {
   return (
     <div>
       amount collected
-      {/* <Dashboard /> */}
+      <Dashboard />
     </div>
   )
 }

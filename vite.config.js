@@ -8,7 +8,13 @@ dotenv.config();
 export default defineConfig({
   plugins: [react()],
   build: {
-    commonjsOptions: { transformMixedEsModules: true } // Change
+    commonjsOptions: { transformMixedEsModules: true },
+    outDir: 'dist',
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+      }
+    }
   },
   base: process.env.VITE_BASE_URL || '/',
 })

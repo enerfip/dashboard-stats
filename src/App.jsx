@@ -8,9 +8,8 @@ function App() {
 
   return (
     <>
-    bob
       <Routes>
-        <Route path='/dashboard-stats' element={<AmountsCollected />} />
+        <Route path='/' element={<AmountsCollected />} />
         <Route path='/chartRepresentation' element={<ChartRepresentation />} />
       </Routes>
     </>

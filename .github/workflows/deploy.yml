@@ -19,6 +19,11 @@ jobs:
 
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
+
+      - name: Print env variables
+        run: |
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}"
+          echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}"
       
       - name: Create .env file from GitHub Secrets
         run: |

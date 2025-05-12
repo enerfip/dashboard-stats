@@ -6,7 +6,8 @@ export const convertNumberToEuro = (collectedAmount) => {
   return new Intl.NumberFormat('fr-FR', {
     style: 'currency', 
     currency: 'EUR',
-    trailingZeroDisplay: "stripIfInteger"
-    
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  
   }).format(collectedAmount);
 }

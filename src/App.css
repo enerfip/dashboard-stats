@@ -124,8 +124,17 @@ img {
    DESKTOP XXL
 ========================== */
 @media (min-width: 2000px) {
+
+  .invest-page {
+    margin-top: 20rem;
+  }
+
   .amountBox p {
-    font-size: var(--font-size-xxxl);
+    font-size: 320px;
+  }
+
+  .currentInvest {
+    margin-top: 30rem;
   }
 
   .currentInvest .currentAmount {

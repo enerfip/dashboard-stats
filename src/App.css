@@ -68,10 +68,6 @@
   margin: 0;
 }
 
-.todayInvest {
-  background-color: transparent !important;
-}
-
 .currentInvest {
   margin-top: 4rem;
 }
@@ -79,7 +75,7 @@
 .currentInvest .currentAmount {
   font-weight: var(--font-weight-light);
   font-size: var(--font-size-xxl);
-  margin: 2rem 0 0 0;
+  margin: 0;
 }
 
 .currentInvest .currentYear {
@@ -129,7 +125,7 @@ img {
 ========================== */
 @media (min-width: 2000px) {
   .amountBox p {
-    font-size: var(--font-size-xxl);
+    font-size: var(--font-size-xxxl);
   }
 
   .currentInvest .currentAmount {

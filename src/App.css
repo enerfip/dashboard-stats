@@ -1,32 +1,96 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  font-family: MuseoModerno;
-  color: #1A4C2D;
+/* ==========================
+   GLOBAL VARIABLES
+========================== */
+:root {
+  --font-primary: "MuseoSans-300", sans-serif;
+  --font-size-lg: 50px;
+  --font-size-xl: 70px;
+  --font-size-xxl: 200px;
+  --font-size-xxxl: 300px;
+  --font-weight-light: 200;
+  --color-primary: #1A4C2D;
+  --color-bg-light: #F2F0EB;
+  --radius-large: 3rem;
+  --padding-sm: 0.5rem;
+  --padding-lg: 2rem;
 }
 
-.totalInvest p {
-  background-color: #F2F0EB;
-  padding: .5rem;
-  border-radius: 3rem;
-  font-size: 70px;
-  font-weight: 300;
+/* ==========================
+   FONT IMPORT
+========================== */
+@font-face {
+  font-family: "MuseoSans-300";
+  src: local("MuseoSans-300"), url("./fonts/MuseoSans-300.otf") format("opentype");
+  font-weight: normal;
+}
+
+/* ==========================
+  GLOBAL STRUCTURE
+========================== */
+#root {
+  margin: 0 auto;
+  padding: var(--padding-lg);
+  text-align: center;
+  font-family: var(--font-primary);
+  color: var(--color-primary);
+}
+
+.invest-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ==========================
+   AMOUNT SECTIONS
+========================== */
+.secondaryAmountInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 2rem;
+}
+
+.amountBox {
+  display: flex;
+  background-color: var(--color-bg-light);
+  border-radius: var(--radius-large);
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.amountBox p {
+  padding: var(--padding-sm);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-light);
   width: 100%;
+  margin: 0;
+}
+
+.todayInvest {
+  background-color: transparent !important;
+}
+
+.currentInvest {
+  margin-top: 4rem;
 }
 
 .currentInvest .currentAmount {
-  font-weight: 500;
-  font-size: 100px;
-  margin-bottom: 0;
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-xxl);
+  margin: 2rem 0 0 0;
 }
 
 .currentInvest .currentYear {
-  font-weight: 300;
-  font-size: 70px;
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-xl);
+  margin: 0;
 }
 
+/* ==========================
+   CELEBRATION ANIMATION
+========================== */
 @keyframes slideUp {
   0% {
     transform: translateY(100px);
@@ -38,7 +102,8 @@
   }
 }
 
-.gifJulien, .gifSeb {
+.gifJulien,
+.gifSeb {
   position: absolute;
   top: 60%;
   animation: slideUp 1.5s ease-out;
@@ -59,57 +124,63 @@ img {
   border-radius: 20px;
 }
 
-/** OFFICE SCREEN PART **/
-
+/* ==========================
+   DESKTOP XXL
+========================== */
 @media (min-width: 2000px) {
-  #root {
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-    font-family: MuseoModerno;
-    color: #1A4C2D;
-  }
-
-  .totalInvest {
-    max-width: 1200px;
-    margin: auto;
-  }
-
-  .totalInvest p {
-    font-size: 100px;
-  }
-
-  .invest-page {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  .amountBox p {
+    font-size: var(--font-size-xxl);
   }
 
   .currentInvest .currentAmount {
+    font-size: var(--font-size-xxxl);
     margin-top: 0;
-    font-size: 300px;
   }
 
   .currentInvest .currentYear {
     font-size: 120px;
   }
 
-  .gifJulien, .gifSeb {
+  .gifJulien,
+  .gifSeb {
     top: 95%;
+  }
+
+  .secondaryAmountInfo {
+    margin: 0 5rem;
   }
 }
 
-/** MOBILE PART **/
-
+/* ==========================
+   MOBILE
+========================== */
 @media (max-width: 575px) {
-  .totalInvest {
+
+  .gifSeb {
+    display: none;
+  }
+
+  .gifJulien {
+    position: static;
+    margin-top: 1rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    animation: slideUp 1.5s ease-out;
+  }
+
+  .gifJulien img {
+    max-width: 200px;
+    border-radius: 20px;
+  }
+
+  .amountBox {
     display: block;
     margin: auto;
     width: 100%;
   }
 
-  .totalInvest p {
-    margin: 0;
+  .amountBox p {
     font-size: 40px;
   }
 
@@ -124,9 +195,7 @@ img {
   }
 
   .currentInvest .currentYear {
-    margin: 0;
     font-size: 50px;
+    margin: 0;
   }
 }
-
-/** MOBILE PART **/

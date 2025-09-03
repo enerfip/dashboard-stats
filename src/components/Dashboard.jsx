@@ -5,6 +5,7 @@ import { convertNumberToEuro } from '../utils/currency_converter';
 import SlotCounter from 'react-slot-counter';
 import milliong from '../assets/DES-MILLIONGS.gif';
 import song from '../assets/Multiplex-Canal.mp3';
+import jduck from '../assets/julien-canard.png';
 
 function Dashboard() {
 
@@ -74,7 +75,7 @@ function Dashboard() {
 
   return (
     <>
-      <section className='invest-page'>
+      {/* <section className='invest-page'>
 
         <div className='secondaryAmountInfo'>
           <div className='amountBox totalInvest'>
@@ -108,7 +109,10 @@ function Dashboard() {
             <audio ref={audioRef} src={song} />
           </>
         )}
-      </section>
+      </section> */}
+      <div>
+          <img src={jduck} alt="Julien en costume" style={{width: "100vh"}}/>
+        </div>
     </>
   )
 }

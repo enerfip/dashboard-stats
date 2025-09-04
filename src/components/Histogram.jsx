@@ -1,7 +1,7 @@
 import CanvasJSReact from '@canvasjs/react-charts';
 import { useEffect, useState } from 'react';
 import { getEnerfipQueryResult, parseEnerfipResponse } from '../enerfip_api/client';
-import duckcostume from '../assets/julien-tenue-canard.png';
+
 
 const { CanvasJSChart } = CanvasJSReact;
 
@@ -259,7 +259,7 @@ function Chart() {
 
     return (
       <>
-        {/* <div style={{marginBottom: "4rem"}}>
+        <div style={{marginBottom: "4rem"}}>
             <CanvasJSChart options={amountsComparisonOptions} />
         </div>
 
@@ -277,9 +277,6 @@ function Chart() {
               </div>
             )}
           </div>
-        </div> */}
-        <div>
-          <img src={duckcostume} alt="Julien en costume" style={{width: "100vh"}}/>
         </div>
       </>
     );

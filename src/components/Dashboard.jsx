@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { getEnerfipQueryResult } from '../enerfip_api/client';
+import { getEnerfipQueryResult, parseEnerfipResponse } from '../enerfip_api/client';
 import { parseEnerfipAmountData } from '../enerfip_api/client';
 import { convertNumberToEuro } from '../utils/currency_converter';
 import SlotCounter from 'react-slot-counter';
@@ -13,6 +13,7 @@ function Dashboard() {
   const [amountCurrentYear, setAmountCurrentYear] = useState(0);
   const [previousAmountCurrentYear, setPreviousAmountCurrentYear] = useState(0);
   const [amountCurrentDay, setAmountCurrentDay] = useState(0);
+  const [amountCurrentMonth, setAmountCurrentMonth] = useState(0);
   const [showAnimation, setShowAnimation] = useState(false);
   const audioRef = useRef(null);
 
@@ -50,10 +51,31 @@ function Dashboard() {
     setAmountCurrentYear(amount);
   };
 
+  const retrieveMonthlyAmounts = async (queryId, apiKey) => {
+    const rawData = await getEnerfipQueryResult(queryId, apiKey);
+    return parseEnerfipResponse(rawData); // retourne directement toutes les rows
+  };
+
+  const retrieveAmountCurrentMonth = async () => {
+    const monthlyAmounts = await retrieveMonthlyAmounts(805, "SJMTKOS2Hb7dqGVOP8urA284ApO2sy2meCcr1rig");
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth(); // 0 = january
+  
+    const thisMonthRow = monthlyAmounts.find(row => {
+      const rowDate = new Date(row.month);
+      return rowDate.getFullYear() === currentYear && rowDate.getMonth() === currentMonth;
+    });
+  
+    setAmountCurrentMonth(thisMonthRow ? convertNumberToEuro(thisMonthRow.collected_by_month) : 0);
+  };
+  
+
   useEffect(() => {
       retreiveAmountCurrentYear().then(() => setPreviousAmountCurrentYear(amountCurrentYear));
       retreiveTotalAmount();
       retrieveAmountCurrentDay();
+      retrieveAmountCurrentMonth();
   }, []);
 
   useEffect(() => {
@@ -62,6 +84,7 @@ function Dashboard() {
       retreiveAmountCurrentYear();
       retreiveTotalAmount();
       retrieveAmountCurrentDay();
+      retrieveAmountCurrentMonth();
       triggerAnimationIfReady();
     }, 60000);
     return () => clearInterval(refreshTimeOut);
@@ -81,6 +104,11 @@ function Dashboard() {
           <div className='amountBox totalInvest'>
             <p>Total raised :</p>
             <p style={{fontWeight: "bold"}}><SlotCounter value={totalAmount} /></p>
+          </div>
+
+          <div className='amountBox monthInvest'>
+            <p>This month :</p>
+            <p style={{fontWeight: "bold"}}><SlotCounter value={amountCurrentMonth} /></p>
           </div>
 
           <div className='amountBox todayInvest'>

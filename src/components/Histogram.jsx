@@ -61,7 +61,7 @@ function Chart() {
  
   useEffect(() => {
     const refreshTimeOut = setInterval(() => {
-      retreiveCollectedAmountByMonth();
+      retreiveMonthlyAmountCurrentYear();
     }, 60000);
     return () => clearInterval(refreshTimeOut);
   }, []);

@@ -14,7 +14,7 @@ function Dashboard() {
   const [previousAmountCurrentYear, setPreviousAmountCurrentYear] = useState(0);
   const [amountCurrentDay, setAmountCurrentDay] = useState(0);
   const [amountCurrentMonth, setAmountCurrentMonth] = useState(0);
-  const [showAnimation, setShowAnimation] = useState(true);
+  const [showAnimation, setShowAnimation] = useState(false);
   const audioRef = useRef(null);
 
   // const animationThresholdAmount = 1000000.0;

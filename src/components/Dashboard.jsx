@@ -3,7 +3,7 @@ import { getEnerfipQueryResult, parseEnerfipResponse } from '../enerfip_api/clie
 import { parseEnerfipAmountData } from '../enerfip_api/client';
 import { convertNumberToEuro } from '../utils/currency_converter';
 import SlotCounter from 'react-slot-counter';
-import milliong from '../assets/DES-MILLIONGS.gif';
+import milliong from '../assets/DES-MILLIONGS-V2.gif';
 import song from '../assets/Multiplex-Canal.mp3';
 
 
@@ -14,10 +14,18 @@ function Dashboard() {
   const [previousAmountCurrentYear, setPreviousAmountCurrentYear] = useState(0);
   const [amountCurrentDay, setAmountCurrentDay] = useState(0);
   const [amountCurrentMonth, setAmountCurrentMonth] = useState(0);
-  const [showAnimation, setShowAnimation] = useState(true);
+  const [showAnimation, setShowAnimation] = useState(false);
   const audioRef = useRef(null);
 
-
+  // const animationThresholdAmount = 1000000.0;
+  // const differenceAmount = Math.floor(parseInt(amountCurrentYear)/animationThresholdAmount) - Math.floor(parseInt(previousAmountCurrentYear)/animationThresholdAmount);
+  
+  // console.log({
+  //   'la diff':differenceAmount,
+  //   'current:': amountCurrentYear,
+  //   'previous:': previousAmountCurrentYear
+  // });
+  
   const triggerAnimationIfReady = () => {
     const animationThresholdAmount = 1000000.0;
     const differenceAmount = Math.floor(amountCurrentYear/animationThresholdAmount) - Math.floor(previousAmountCurrentYear/animationThresholdAmount);
@@ -35,6 +43,7 @@ function Dashboard() {
     const rawData = await getEnerfipQueryResult(queryId, apiKey); // returns response.data from redash query
     const collectedAmount = parseEnerfipAmountData(rawData); // rawData.query_result.data.rows[0].collected_amount
     return convertNumberToEuro(collectedAmount); // affichage des chiffre en Euro
+    // return Number(collectedAmount);
   };
   const retreiveTotalAmount = async () => {
     const amount = await retrieveAmountForDisplay(772, "7kScPIQlpk96VM6Oaw9nwQAeuWn0KFirlePkVXDW");

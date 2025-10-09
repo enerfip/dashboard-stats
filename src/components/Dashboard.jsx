@@ -17,34 +17,26 @@ function Dashboard() {
   const [showAnimation, setShowAnimation] = useState(false);
   const audioRef = useRef(null);
 
-  // const animationThresholdAmount = 1000000.0;
-  // const differenceAmount = Math.floor(parseInt(amountCurrentYear)/animationThresholdAmount) - Math.floor(parseInt(previousAmountCurrentYear)/animationThresholdAmount);
-  
-  // console.log({
-  //   'la diff':differenceAmount,
-  //   'current:': amountCurrentYear,
-  //   'previous:': previousAmountCurrentYear
-  // });
-  
+
   const triggerAnimationIfReady = () => {
     const animationThresholdAmount = 1000000.0;
     const differenceAmount = Math.floor(amountCurrentYear/animationThresholdAmount) - Math.floor(previousAmountCurrentYear/animationThresholdAmount);
-  
-    if (differenceAmount === 1) {
+
+    if (differenceAmount >= 1) {
       // Trigger animation
       setShowAnimation(true);
       setTimeout(() => {
         setShowAnimation(false);
-      }, 60000);
+      }, 6000);
     }
-  }
+  };
 
   const retrieveAmountForDisplay = async (queryId, apiKey) => {
     const rawData = await getEnerfipQueryResult(queryId, apiKey); // returns response.data from redash query
     const collectedAmount = parseEnerfipAmountData(rawData); // rawData.query_result.data.rows[0].collected_amount
-    return convertNumberToEuro(collectedAmount); // affichage des chiffre en Euro
-    // return Number(collectedAmount);
+    return Number(collectedAmount);
   };
+
   const retreiveTotalAmount = async () => {
     const amount = await retrieveAmountForDisplay(772, "7kScPIQlpk96VM6Oaw9nwQAeuWn0KFirlePkVXDW");
     setTotalAmount(amount);
@@ -70,15 +62,15 @@ function Dashboard() {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth(); // 0 = january
-  
+
     const thisMonthRow = monthlyAmounts.find(row => {
       const rowDate = new Date(row.month);
       return rowDate.getFullYear() === currentYear && rowDate.getMonth() === currentMonth;
     });
-  
+
     setAmountCurrentMonth(thisMonthRow ? convertNumberToEuro(thisMonthRow.collected_by_month) : 0);
   };
-  
+
 
   useEffect(() => {
       retreiveAmountCurrentYear().then(() => setPreviousAmountCurrentYear(amountCurrentYear));
@@ -112,7 +104,7 @@ function Dashboard() {
         <div className='secondaryAmountInfo'>
           <div className='amountBox totalInvest'>
             <p>Total raised :</p>
-            <p style={{fontWeight: "bold"}}><SlotCounter value={totalAmount} /></p>
+            <p style={{fontWeight: "bold"}}><SlotCounter value={convertNumberToEuro(totalAmount)} /></p>
           </div>
 
           <div className='amountBox monthInvest'>
@@ -122,16 +114,16 @@ function Dashboard() {
 
           <div className='amountBox todayInvest'>
               <p>Today :</p>
-              <p style={{fontWeight: "bold"}}><SlotCounter value={amountCurrentDay} /></p>
+              <p style={{fontWeight: "bold"}}><SlotCounter value={convertNumberToEuro(amountCurrentDay)} /></p>
           </div>
         </div>
 
-        
+
         <div className='currentInvest'>
           <p className='currentYear'>Raised in {new Date().getFullYear()} :</p>
-          <p className='currentAmount'><SlotCounter value={amountCurrentYear} /></p>
+          <p className='currentAmount'><SlotCounter value={convertNumberToEuro(amountCurrentYear)} /></p>
         </div>
-       
+
 
         {showAnimation && (
           <>

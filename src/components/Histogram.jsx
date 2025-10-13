@@ -59,12 +59,21 @@ function Chart() {
     retreiveCollectedAmountByMonth();
   }, []);
  
+  // useEffect(() => {
+  //   const refreshTimeOut = setInterval(() => {
+  //     retreiveMonthlyAmountCurrentYear();
+  //   }, 60000);
+  //   return () => clearInterval(refreshTimeOut);
+  // }, []);
   useEffect(() => {
     const refreshTimeOut = setInterval(() => {
-      retreiveMonthlyAmountCurrentYear();
+      // Re-télécharge les données de base
+      retreiveCollectedAmountByMonth();
     }, 60000);
+  
     return () => clearInterval(refreshTimeOut);
   }, []);
+  
 
   useEffect(() => {
     retreiveMonthlyAmountLastYear();

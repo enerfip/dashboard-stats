@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { getEnerfipQueryResult, parseEnerfipResponse } from '../enerfip_api/client';
-import { parseEnerfipAmountData } from '../enerfip_api/client';
+import { parseEnerfipAmountData, parseEnerfipInsuredAmountData } from '../enerfip_api/client';
 import { convertNumberToEuro } from '../utils/currency_converter';
 import SlotCounter from 'react-slot-counter';
 import milliong from '../assets/DES-MILLIONGS-V2.gif';
@@ -11,6 +11,7 @@ function Dashboard() {
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [amountCurrentYear, setAmountCurrentYear] = useState(0);
+  const [insuredAmountCurrentYear, setInsuredAmountCurrentYear] = useState({ amount: null, status: 'loading' });
   const [previousAmountCurrentYear, setPreviousAmountCurrentYear] = useState(0);
   const [amountCurrentDay, setAmountCurrentDay] = useState(0);
   const [amountCurrentMonth, setAmountCurrentMonth] = useState(0);
@@ -52,6 +53,24 @@ function Dashboard() {
     setAmountCurrentYear(amount);
   };
 
+  const retrieveInsuredAmountCurrentYear = async () => {
+    const apiKey = import.meta.env.VITE_INSURED_AMOUNT_API_KEY;
+    if (!apiKey) {
+      console.error("Missing VITE_INSURED_AMOUNT_API_KEY for Redash query 1300");
+      setInsuredAmountCurrentYear({ amount: null, status: 'unavailable' });
+      return;
+    }
+
+    try {
+      const rawData = await getEnerfipQueryResult(1300, apiKey);
+      const amount = parseEnerfipInsuredAmountData(rawData);
+      setInsuredAmountCurrentYear({ amount, status: amount === null ? 'unavailable' : 'ready' });
+    } catch {
+      console.error("Unable to display the current year's insured amount (Redash query 1300)");
+      setInsuredAmountCurrentYear({ amount: null, status: 'unavailable' });
+    }
+  };
+
   const retrieveMonthlyAmounts = async (queryId, apiKey) => {
     const rawData = await getEnerfipQueryResult(queryId, apiKey);
     return parseEnerfipResponse(rawData); // retourne directement toutes les rows
@@ -74,6 +93,7 @@ function Dashboard() {
 
   useEffect(() => {
       retreiveAmountCurrentYear().then(() => setPreviousAmountCurrentYear(amountCurrentYear));
+      retrieveInsuredAmountCurrentYear();
       retreiveTotalAmount();
       retrieveAmountCurrentDay();
       retrieveAmountCurrentMonth();
@@ -83,6 +103,7 @@ function Dashboard() {
     const refreshTimeOut = setInterval(() => {
       setPreviousAmountCurrentYear(amountCurrentYear)
       retreiveAmountCurrentYear();
+      retrieveInsuredAmountCurrentYear();
       retreiveTotalAmount();
       retrieveAmountCurrentDay();
       retrieveAmountCurrentMonth();
@@ -122,6 +143,18 @@ function Dashboard() {
         <div className='currentInvest'>
           <p className='currentYear'>Raised in {new Date().getFullYear()} :</p>
           <p className='currentAmount'><SlotCounter value={convertNumberToEuro(amountCurrentYear)} /></p>
+          <p className='insuredAmountInfo'>
+            Insured amount :{' '}
+            <span className='insuredAmountValue'>
+              {insuredAmountCurrentYear.status === 'ready' ? (
+                <SlotCounter value={convertNumberToEuro(insuredAmountCurrentYear.amount)} />
+              ) : (
+                <span className='insuredAmountStatus'>
+                  {insuredAmountCurrentYear.status === 'loading' ? 'Loading...' : 'Amount unavailable yet'}
+                </span>
+              )}
+            </span>
+          </p>
         </div>
 
 

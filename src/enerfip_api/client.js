@@ -1,5 +1,7 @@
 import axios from "axios";
 
+export { parseEnerfipResponse, parseEnerfipAmountData, parseEnerfipInsuredAmountData } from './response.js';
+
 const baseURL = import.meta.env.VITE_API_URL;
 
 export const getEnerfipQueryResult = async (queryId, apiKey) => {
@@ -15,20 +17,7 @@ export const getEnerfipQueryResult = async (queryId, apiKey) => {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(`Unable to retrieve Redash query ${queryId}`);
+    throw error;
   }
-};
-
-export const parseEnerfipResponse = (rawData) => {
-  const rows = rawData?.query_result?.data?.rows;
-  if (rows === undefined || rows.length === 0) {
-    throw new Error("No data available");
-  }
-
-  return rows
-};
-
-export const parseEnerfipAmountData = (rawData) => {
-  const rows = parseEnerfipResponse(rawData);
-  return rows[0].collected_amount;
 };

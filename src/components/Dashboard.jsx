@@ -54,21 +54,9 @@ function Dashboard() {
   };
 
   const retrieveInsuredAmountCurrentYear = async () => {
-    const apiKey = import.meta.env.VITE_INSURED_AMOUNT_API_KEY;
-    if (!apiKey) {
-      console.error("Missing VITE_INSURED_AMOUNT_API_KEY for Redash query 1300");
-      setInsuredAmountCurrentYear({ amount: null, status: 'unavailable' });
-      return;
-    }
-
-    try {
-      const rawData = await getEnerfipQueryResult(1300, apiKey);
-      const amount = parseEnerfipInsuredAmountData(rawData);
-      setInsuredAmountCurrentYear({ amount, status: amount === null ? 'unavailable' : 'ready' });
-    } catch {
-      console.error("Unable to display the current year's insured amount (Redash query 1300)");
-      setInsuredAmountCurrentYear({ amount: null, status: 'unavailable' });
-    }
+    const rawData = await getEnerfipQueryResult(1300, "I4HoPpFOER03i5saUFLQH9WH7TtUiBZBBVZ4Mz9w");
+    const amount = parseEnerfipInsuredAmountData(rawData);
+    setInsuredAmountCurrentYear({ amount, status: amount === null ? 'unavailable' : 'ready' });
   };
 
   const retrieveMonthlyAmounts = async (queryId, apiKey) => {

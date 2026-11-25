@@ -24,7 +24,6 @@ jobs:
         run: |
           echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
           echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}" >> .env
-          echo "VITE_INSURED_AMOUNT_API_KEY=${{ secrets.VITE_INSURED_AMOUNT_API_KEY }}" >> .env
 
       - name: Build project
         run: npm run build

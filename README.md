@@ -5,6 +5,7 @@
 
 ## Features :
   - Collected Amount Display: The total amount collected and the amount for the current year are shown, with an animation triggered when the amount reaches a specific threshold.
+  - Insured Amount Display: A secondary indicator below the current-year total shows the current year's insured amount from Redash query 1300 (`insured_amount`), refreshed every minute. Missing data or a failed request displays "Amount unavailable", not zero.
   - Graphical Comparison: Two charts are generated:
     - A comparison of the collected amounts by month for the current year and the previous year.
     - A comparison of the cumulative amounts collected for both years.
@@ -31,6 +32,15 @@
 `npm run dev`
 
 This will start the application on http://localhost:3000.
+
+Configure `VITE_API_URL` (the Redash base URL) and `VITE_INSURED_AMOUNT_API_KEY`
+(the API key for query 1300) in an untracked `.env.local` file. For deployment,
+add `VITE_INSURED_AMOUNT_API_KEY` to the repository's GitHub Actions secrets.
+Never commit API keys. Vite embeds `VITE_*` values in the browser bundle, so
+environment variables keep keys out of source control but do not make them
+private from dashboard visitors.
+
+Run the API response tests with `node --test src/enerfip_api/response.test.js`.
 
 
 ## Project Structure : 

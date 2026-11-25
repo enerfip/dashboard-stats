@@ -85,6 +85,20 @@
   margin: 0;
 }
 
+.insuredAmountInfo {
+  margin: 1.5rem 0 0;
+  font-size: clamp(18px, 2vw, 40px);
+  font-weight: var(--font-weight-light);
+}
+
+.insuredAmountValue {
+  font-weight: bold;
+}
+
+.insuredAmountStatus {
+  font-weight: var(--font-weight-light);
+}
+
 /* ==========================
    CELEBRATION ANIMATION
 ========================== */
@@ -147,6 +161,10 @@ img {
     font-size: 120px;
   }
 
+  .insuredAmountInfo {
+    font-size: 60px;
+  }
+
   .gifJulien,
   .gifSeb {
     top: 95%;
@@ -203,5 +221,9 @@ img {
   .currentInvest .currentYear {
     font-size: 50px;
     margin: 0;
+  }
+
+  .insuredAmountInfo {
+    margin-top: 0;
   }
 }
